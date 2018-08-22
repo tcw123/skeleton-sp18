@@ -17,8 +17,13 @@ public class Planet {
 		imgFileName = img;
 	}
 
-	public Planet(){
-
+	public Planet(Planet p){
+		this.xxPos = p.xxPos;
+		this.yyPos = p.yyPos;
+		this.xxVel = p.xxVel;
+		this.yyVel = p.yyVel;
+		this.mass = p.mass;
+		this.imgFileName = p.imgFileName;
 	}
 	/** 计算两颗行星之间的距离      */
 	public double calcDistance(Planet p){

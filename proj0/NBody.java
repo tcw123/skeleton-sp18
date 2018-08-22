@@ -14,13 +14,14 @@ public class NBody {
 		Planet planets[] = new Planet[ammofPlanets];
 		in.readDouble();
 		for(int i = 0; i < ammofPlanets; i++){
-			planets[i] = new Planet();
-			planets[i].xxPos = in.readDouble();
-			planets[i].yyPos = in.readDouble();
-			planets[i].xxVel = in.readDouble();
-			planets[i].yyVel = in.readDouble();
-			planets[i].mass  = in.readDouble();
-			planets[i].imgFileName = in.readString();
+			double pxxPos = in.readDouble();
+			double pyyPos = in.readDouble();
+			double pxxVel = in.readDouble();
+			double pyyVel = in.readDouble();
+			double pmass  = in.readDouble();
+			String pimgFileName = in.readString();
+			Planet p = new Planet(pxxPos, pyyPos, pxxVel, pyyVel, pmass, pimgFileName);
+			planets[i] = new Planet(p);
 		}
 		return planets;
 	}
