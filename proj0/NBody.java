@@ -1,5 +1,5 @@
 public class NBody {
-	public static String background = "images/starfield.jpg";
+	private static String background = "images/starfield.jpg";
 	/** 读取文件中宇宙的半径范围。*/
 	public static double readRadius(String file){
 		In in = new In(file);

@@ -1,11 +1,11 @@
 public class Planet {	
-	double xxPos;
-	double yyPos;
-	double xxVel;
-	double yyVel;
-	double mass;//质量
-	String imgFileName;
-	public static final double G = 6.67e-11;
+	private double xxPos;
+	private double yyPos;
+	private double xxVel;
+	private double yyVel;
+	private double mass;//质量
+	private String imgFileName;
+	private static final double G = 6.67e-11;
 	/** 初始化一颗行星的坐标等信息     */
 	public Planet(double xP, double yP, double xV, 
 				  double yV, double m, String img){
