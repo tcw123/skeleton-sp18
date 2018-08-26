@@ -85,8 +85,13 @@ public class IntList {
         if((A == null) && (B == null)) {
             return null;
         }
+        else if ((A == null) && (B != null)) {
+            A = B;
+            return A;
+        }
         else {
             IntList temp = A;
+
             while(temp.rest != null) {
                 temp = temp.rest;
             }
