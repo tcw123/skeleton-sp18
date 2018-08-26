@@ -8,6 +8,7 @@ import java.util.Formatter;
  *         [Do not modify this file.]
  */
 public class IntList {
+    private static IntList temp;
     /**
      * First element of list.
      */
@@ -37,7 +38,6 @@ public class IntList {
      * Returns a list equal to L with all elements squared. Destructive.
      */
     public static void dSquareList(IntList L) {
-
         while (L != null) {
             L.first = L.first * L.first;
             L = L.rest;
@@ -82,7 +82,16 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if((A == null) && (B == null))
+            return null;
+        else {
+            IntList temp = A;
+            while(temp != null) {
+                temp = temp.rest;
+            }
+            temp = B;
+        }
+        return A;
     }
 
     /**
@@ -91,7 +100,21 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if((A == null) && (B == null))
+            return null;
+        else {
+            IntList temp = new IntList();
+            IntList temp2 = temp;
+            IntList temp3 = A;
+            while (temp3 != null) {
+                temp2.first = temp3.first;
+                temp2.rest  = new IntList();
+                temp2 = temp2.rest;
+                temp3 = temp3.rest;
+            }
+            temp2 = B;
+        }
+        return temp;
     }
 
 
