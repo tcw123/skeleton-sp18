@@ -87,10 +87,10 @@ public class IntList {
         }
         else {
             IntList temp = A;
-            while(temp != null) {
+            while(temp.rest != null) {
                 temp = temp.rest;
             }
-            temp = B;
+            temp.rest = B;
             return A;
         }
     }
@@ -107,13 +107,14 @@ public class IntList {
             IntList temp = new IntList();
             IntList temp2 = temp;
             IntList temp3 = A;
-            while (temp3 != null) {
+            while (temp3.rest != null) {
                 temp2.first = temp3.first;
                 temp2.rest  = new IntList();
                 temp2 = temp2.rest;
                 temp3 = temp3.rest;
             }
-            temp2 = B;
+            temp2.first = temp3.first;
+            temp2.rest = B;
         }
         return temp;
     }
