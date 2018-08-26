@@ -108,6 +108,9 @@ public class IntList {
         //TODO:  fill in method
         if((A == null) && (B == null))
             return null;
+        else if ((A == null) && (B != null)) {
+            return B;
+        }
         else {
             IntList temp = new IntList();
             IntList temp2 = temp;
