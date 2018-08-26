@@ -115,8 +115,8 @@ public class IntList {
             }
             temp2.first = temp3.first;
             temp2.rest = B;
+            return temp;
         }
-        return temp;
     }
 
 
