@@ -1,7 +1,6 @@
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
-    private static double usage_ratio;
     /** Creat an empty list the starting length of the list is 8. */
     public ArrayDeque() {
         items = (T []) new Object[8];
@@ -77,9 +76,9 @@ public class ArrayDeque<T> {
     }
     /** Judge whether necessary to shrink the list. */
     private void checkR() {
-        usage_ratio = size / items.length;
+        double usage_ratio = size / items.length;
         if ((usage_ratio < 0.25) && (items.length >= 16)) {
-            T[] a = (T []) new Object[size / 2];
+            T[] a = (T []) new Object[items.length / 2];
             System.arraycopy(items, 0 ,a, 0, size);
             items = a;
         }
