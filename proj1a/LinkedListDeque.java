@@ -1,5 +1,5 @@
 public class LinkedListDeque<T> {
-    public class Node {
+    private class Node {
         public T item;
         public Node prev;
         public Node next;
@@ -14,14 +14,16 @@ public class LinkedListDeque<T> {
     private Node find;
     /** creat a empty linked list deque. */
     public LinkedListDeque() {
-        sentinel = new Node(null, sentinel, sentinel);
+        sentinel = new Node(null, null, null);
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
         find = sentinel;
     }
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T i) {
         size += 1;
         sentinel.next = new Node(i, sentinel, sentinel.next);
-        if(size == 1) {
+        if (size == 1) {
             sentinel.prev = sentinel.next;
             sentinel.next.next = sentinel;
         }
@@ -37,7 +39,7 @@ public class LinkedListDeque<T> {
     }
     /** Returns true if deque is empty, false otherwise. */
     public boolean isEmpty() {
-        if(size == 0) {
+        if (size == 0) {
             return true;
         }
         else {
