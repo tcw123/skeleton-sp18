@@ -1,9 +1,9 @@
 public class LinkedListDeque<T> {
     private class Node {
-        public T item;
-        public Node prev;
-        public Node next;
-        public Node(T i, Node p, Node n) {
+         T item;
+         Node prev;
+         Node next;
+         public Node(T i, Node p, Node n) {
             item = i;
             prev = p;
             next = n;
@@ -54,7 +54,7 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         Node temp = sentinel.next;
         for (int i = 0; i < size; i++) {
-            System.out.print(temp.item+" ");
+            System.out.print(temp.item + " ");
             temp = temp.next;
         }
     }
@@ -91,12 +91,13 @@ public class LinkedListDeque<T> {
     /** Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
      * If no such item exists, returns null. Must not alter the deque! */
 
-     public T get(int index) {
-        Node temp = sentinel.next;
-        if (index > size-1) {
+    public T get(int index) {
+         Node temp = sentinel.next;
+         if (index > size-1) {
             return null;
-        }
-        else {
+         }
+
+         else {
             for (int i = 0; i < index; i++) {
                 temp = temp.next;
             }
@@ -109,11 +110,12 @@ public class LinkedListDeque<T> {
          if (index > size -1) {
              return null;
          }
-         else if (index == 0){
+         else if (index == 0) {
              Node temp = find;
              find = sentinel;
              return temp.item;
          }
+
          else {
              return getRecursive(index - 1);
          }
