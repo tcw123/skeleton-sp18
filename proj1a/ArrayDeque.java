@@ -8,7 +8,6 @@ public class ArrayDeque<T> {
     }
     /** Add an item to the front of the list. */
     public void addFirst(T i) {
-        size += 1;
         if (size == items.length) {
             T[] a = (T []) new Object[size * 2];
             System.arraycopy(items, 0, a, 1, size);
@@ -19,6 +18,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, 0, items, 1, size);
             items[0] = i;
         }
+        size += 1;
     }
     /** Add an item to the back of the list. */
     public void addLast(T i) {
