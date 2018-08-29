@@ -111,7 +111,7 @@ public class LinkedListDeque<T> {
          }
          else if (index == 0){
              Node temp = find;
-             find = sentinel
+             find = sentinel;
              return temp.item;
          }
          else {
