@@ -56,17 +56,17 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         T x = items[0];
         System.arraycopy(items, 1, items, 0, size - 1);
-        //items[size - 1] = null;
+        items[size - 1] = null;
         size -= 1;
-        checkR();
+        //checkR();
         return x;
     }
     /** Remove the last item of the list. */
     public T removeLast() {
         T x = items[size - 1];
-        //items[size - 1] = null;
+        items[size - 1] = null;
         size -= 1;
-        checkR();
+        //checkR();
         return x;
     }
     /** Get the item an position index. */
@@ -75,14 +75,14 @@ public class ArrayDeque<T> {
         return x;
     }
     /** Judge whether necessary to shrink the list. */
-    private void checkR() {
-        double usage_ratio = (size * 1.0) / items.length;
-        if ((usage_ratio < 0.25) && (items.length >= 16)) {
-            T[] a = (T []) new Object[items.length / 2];
-            System.arraycopy(items, 0 ,a, 0, size);
-            items = a;
-        }
-    }
+//    private void checkR() {
+//        double usage_ratio = (size * 1.0) / items.length;
+//        if ((usage_ratio < 0.25) && (items.length >= 16)) {
+//            T[] a = (T []) new Object[items.length / 2];
+//            System.arraycopy(items, 0 ,a, 0, size);
+//            items = a;
+//        }
+//    }
 
 
 
