@@ -6,10 +6,11 @@ public class ArrayDeque<T> {
         items = (T []) new Object[8];
         size = 0;
     }
+
     /** Add an item to the front of the list. */
     public void addFirst(T i) {
         if (size == items.length) {
-            T[] a = (T []) new Object[size * 3];
+            T[] a = (T []) new Object[size * 4];
             System.arraycopy(items, 0, a, 1, size);
             items = a;
             items[0] = i;
@@ -23,7 +24,7 @@ public class ArrayDeque<T> {
     /** Add an item to the back of the list. */
     public void addLast(T i) {
         if (size == items.length) {
-            T[] a = (T []) new Object[size * 3];
+            T[] a = (T []) new Object[size * 4];
             System.arraycopy(items, 0, a, 0, size);
             items = a;
             items[size] = i;
@@ -88,7 +89,7 @@ public class ArrayDeque<T> {
     private void checkR() {
         double usage_ratio = (size * 1.0) / items.length;
         if ((usage_ratio < 0.25) && (items.length >= 16)) {
-            T[] a = (T []) new Object[items.length / 2];
+            T[] a = (T []) new Object[items.length / 4];
             System.arraycopy(items, 0 ,a, 0, size);
             items = a;
         }
