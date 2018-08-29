@@ -110,7 +110,9 @@ public class LinkedListDeque<T> {
              return null;
          }
          else if (index == 0){
-             return find.item;
+             Node temp = find;
+             find = sentinel
+             return temp.item;
          }
          else {
              return getRecursive(index - 1);

@@ -77,7 +77,9 @@ public class LinkedListDequeTest {
 	}
 
 	public static void main(String[] args) {
-		addIsEmptySizeTest();
-		addRemoveTest();
+		LinkedListDeque<Integer> ll = new LinkedListDeque<>();
+		ll.addFirst(0);
+		ll.getRecursive(0);
+		ll.getRecursive(0);
 	}
 } 
