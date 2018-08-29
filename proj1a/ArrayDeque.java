@@ -89,7 +89,7 @@ public class ArrayDeque<T> {
     private void checkR() {
         double usage_ratio = (size * 1.0) / items.length;
         if ((usage_ratio < 0.25) && (items.length >= 16)) {
-            T[] a = (T []) new Object[items.length / 4];
+            T[] a = (T []) new Object[items.length / 2];
             System.arraycopy(items, 0 ,a, 0, size);
             items = a;
         }
