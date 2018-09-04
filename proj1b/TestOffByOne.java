@@ -15,5 +15,10 @@ public class TestOffByOne {
         assertTrue(offByOne.equalChars('b', 'b'));
         System.out.println(offByOne.equalChars('x', 'y'));
     }
-    
+
+    @Test
+    public void testPalindrome2() {
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
+        System.out.println(palindrome.isPalindrome("flakf", offByOne));
+    }
 }
