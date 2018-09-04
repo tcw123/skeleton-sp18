@@ -19,7 +19,7 @@ public class TestPalindrome {
     @Test
     public void testIsPalindrome() {
         String word1 = "cat";
-        String word2 = "Aba";
+        String word2 = "aba";
         assertFalse(palindrome.isPalindrome(word1));
         assertTrue(palindrome.isPalindrome(word2));
     }
