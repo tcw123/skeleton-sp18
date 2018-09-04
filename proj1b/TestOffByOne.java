@@ -13,6 +13,8 @@ public class TestOffByOne {
     @Test
     public void testEqualChars() {
         assertTrue(offByOne.equalChars('a', 'b'));
+        assertTrue(offByOne.equalChars('?', '@'));
+        assertFalse(offByOne.equalChars('A', 'b'));
         System.out.println(offByOne.equalChars('x', 'y'));
     }
 
