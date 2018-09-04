@@ -33,7 +33,7 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("flake", offByOne));
         System.out.println(palindrome.isPalindrome("flakf", offByOne));
     }
-    
+
     @Test
     public void testPalindrome3() {
         String word = "abcdejihgf";
