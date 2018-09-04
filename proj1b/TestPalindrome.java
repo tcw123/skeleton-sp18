@@ -25,5 +25,10 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome(word2));
         assertFalse(palindrome.isPalindrome(word3));
     }
+    @Test
+    public void testPalindrome2() {
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
+        System.out.println(palindrome.isPalindrome("flakf", offByOne));
+    }
 
 }
