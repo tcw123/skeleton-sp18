@@ -20,8 +20,10 @@ public class TestPalindrome {
     public void testIsPalindrome() {
         String word1 = "cat";
         String word2 = "aba";
+        String word3 = "Aba";
         assertFalse(palindrome.isPalindrome(word1));
         assertTrue(palindrome.isPalindrome(word2));
+        assertFalse(palindrome.isPalindrome(word3));
     }
 
 }
