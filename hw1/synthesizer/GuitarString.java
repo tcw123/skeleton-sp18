@@ -1,6 +1,5 @@
 package synthesizer;
-import org.junit.Test;
-import edu.princeton.cs.algs4.StdAudio;
+
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ public class GuitarString {
     private ArrayList<Double> list = new ArrayList<>();
 
     public GuitarString(double frequency) {
-        buffer = new ArrayRingBuffer<>((int)Math.round(SR / frequency));
+        buffer = new ArrayRingBuffer<>((int) Math.round(SR / frequency));
         while (buffer.fillCount() != buffer.capacity()) {
             buffer.enqueue(0.0);
         }

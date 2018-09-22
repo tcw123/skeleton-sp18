@@ -12,7 +12,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return new KeyIterator();
     }
 
-    public class KeyIterator implements Iterator<T> {
+    private class KeyIterator implements Iterator<T> {
         private int ptr;
         public KeyIterator() {
             ptr = 0;
@@ -40,7 +40,10 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
 
     @Override
     public T peek() {
-            return rb[first];
+        if (fillCount == 0) {
+            throw new RuntimeException("Ring buffer overflow");
+        }
+        return rb[first];
     }
 
     @Override
@@ -50,9 +53,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         }
         T tmp = rb[first];
         rb[first] = null;
-        if (first == rb.length - 1) {
-            first = 0;
-        }
+        if (first == rb.length - 1) first = 0;
         else {
             first += 1;
         }
@@ -68,9 +69,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         if (last == rb.length - 1) {
             last = 0;
         }
-        else {
-            last += 1;
-        }
+        else last += 1;
         fillCount += 1;
     }
 
