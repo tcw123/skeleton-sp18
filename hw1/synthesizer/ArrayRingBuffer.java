@@ -53,7 +53,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         }
         T tmp = rb[first];
         rb[first] = null;
-        if (first == rb.length - 1) first = 0;
+        if (first == rb.length - 1) {
+            first = 0;
+        }
         else {
             first += 1;
         }
@@ -69,7 +71,9 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         if (last == rb.length - 1) {
             last = 0;
         }
-        else last += 1;
+        else {
+            last += 1;
+        }
         fillCount += 1;
     }
 
