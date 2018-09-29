@@ -1,4 +1,4 @@
-package byog.lab5;
+package byog.Core;
 
 public class Position {
     public int x;

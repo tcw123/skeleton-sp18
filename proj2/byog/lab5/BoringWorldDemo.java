@@ -13,10 +13,12 @@ public class BoringWorldDemo {
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
+        // 大背景 Terenderer
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
         // initialize tiles
+        // 背景内的图画 TETile
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
