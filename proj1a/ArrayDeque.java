@@ -1,6 +1,7 @@
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
+
     /** Creat an empty list the starting length of the list is 8. */
     public ArrayDeque() {
         items = (T []) new Object[8];
@@ -80,11 +81,13 @@ public class ArrayDeque<T> {
             return x;
         }
     }
+
     /** Get the item an position index. */
     public T get(int index) {
         T x = items[index];
         return x;
     }
+
     /** Judge whether necessary to shrink the list. */
     private void checkR() {
         double usage_ratio = (size * 1.0) / items.length;

@@ -1,4 +1,5 @@
 public class NBody {
+	//the image of background
 	private static String background = "images/starfield.jpg";
 	/** 读取文件中宇宙的半径范围。*/
 	public static double readRadius(String file){
@@ -44,6 +45,7 @@ public class NBody {
 		StdDraw.show();
 		//enable double buffering 
 		StdDraw.enableDoubleBuffering();
+		StdAudio.play("audio/2001.wav");
 		int time = 0;
 		while(time < (int)T) {
 			double[] xForces = new double[planets.length];
