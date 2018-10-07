@@ -45,14 +45,7 @@ public class Game {
             random = Long.parseLong(seed);
             MapGenerator map = new MapGenerator(WIDTH, HEIGHT, random);
             map.buildMap();
-            saving = parseControl(map, input, seed.length() + 2);
-            if (saving == true) {
-                temp = map.world;
-            }
-            else {
-                MapGenerator newmap = new MapGenerator(WIDTH, HEIGHT, 123);
-                temp = newmap.world;
-            }
+            parseControl(map, input, seed.length() + 2);
 
             finalWorldFrame = map.world;
         }
@@ -62,7 +55,6 @@ public class Game {
 
         return finalWorldFrame;
     }
-
 
     public String parseSeed(String input) {
         String seed = "";

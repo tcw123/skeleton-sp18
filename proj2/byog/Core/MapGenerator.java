@@ -137,18 +137,22 @@ public class MapGenerator {
         for (int i = 0; i < roomlist.size() - 1; i += 1) {
             Room ra = roomlist.get(i);
             Room rb = roomlist.get(i + 1);
-            Position pa = new Position(ra.x1 + RANDOM.nextInt(ra.width), ra.y1 + RANDOM.nextInt(ra.height));
-            Position pb = new Position(rb.x1 + RANDOM.nextInt(rb.width), rb.y1 + RANDOM.nextInt(rb.height));
+            Position pa = new Position(ra.x1 + RANDOM.nextInt(ra.width),
+                    ra.y1 + RANDOM.nextInt(ra.height));
+            Position pb = new Position(rb.x1 + RANDOM.nextInt(rb.width),
+                    rb.y1 + RANDOM.nextInt(rb.height));
             connectPositions(pa, pb);
         }
     }
 
     public void connectPositions(Position pa, Position pb) {
         if (pa.x == pb.x) {
-            makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)), 1, Math.abs(pa.y - pb.y) + 1, Tileset.FLOOR);
+            makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)),
+                    1, Math.abs(pa.y - pb.y) + 1, Tileset.FLOOR);
         }
         else if (pa.y == pb.y) {
-            makeSpace(world, new Position(Math.min(pa.x, pb.x), pa.y), Math.abs(pa.x - pb.x) + 1, 1, Tileset.FLOOR);
+            makeSpace(world, new Position(Math.min(pa.x, pb.x), pa.y),
+                    Math.abs(pa.x - pb.x) + 1, 1, Tileset.FLOOR);
         }
         else {
             Position tmpPos = new Position(pa.x, pb.y);

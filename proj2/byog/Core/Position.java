@@ -1,11 +1,11 @@
 package byog.Core;
 
 public class Position {
-    public int x;
-    public int y;
+    int x;
+    int y;
 
-    public Position(int x_position, int y_position) {
-        x = x_position;
-        y = y_position;
+    public Position(int xPosition, int yPosition) {
+        x = xPosition;
+        y = yPosition;
     }
 }
