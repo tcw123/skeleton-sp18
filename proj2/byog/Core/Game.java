@@ -2,13 +2,14 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import edu.princeton.cs.introcs.StdDraw;
+
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    static TETile[][] temp = null;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -37,10 +38,8 @@ public class Game {
 
         TETile[][] finalWorldFrame = null;
         input = input.toUpperCase();
-        boolean saving = false;
         if (input.charAt(0) == 'N') {
-            int i = 1;
-            long random = 0;
+            long random;
             String seed = parseSeed(input);
             random = Long.parseLong(seed);
             MapGenerator map = new MapGenerator(WIDTH, HEIGHT, random);
@@ -50,7 +49,6 @@ public class Game {
             finalWorldFrame = map.world;
         }
         else if (input.charAt(0) == 'L') {
-            finalWorldFrame = temp;
         }
 
         return finalWorldFrame;
@@ -87,7 +85,5 @@ public class Game {
         }
         return false;
     }
-
-
 
 }
