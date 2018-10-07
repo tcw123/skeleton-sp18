@@ -20,7 +20,7 @@ public class MapGenerator {
     Player player;
 
 
-    public MapGenerator(int w, int h, int random) {
+    public MapGenerator(int w, int h, long random) {
         WIDTH = w;
         HEIGHT = w;
         RANDOM = new Random(random);

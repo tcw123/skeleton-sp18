@@ -40,9 +40,9 @@ public class Game {
         boolean saving = false;
         if (input.charAt(0) == 'N') {
             int i = 1;
-            int random = 0;
+            long random = 0;
             String seed = parseSeed(input);
-            random = Integer.parseInt(seed);
+            random = Long.parseLong(seed);
             MapGenerator map = new MapGenerator(WIDTH, HEIGHT, random);
             map.buildMap();
             saving = parseControl(map, input, seed.length() + 2);
