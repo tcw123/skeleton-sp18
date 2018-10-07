@@ -9,20 +9,21 @@ import java.util.Collections;
 import java.util.Random;
 
 public class MapGenerator {
-    private static final long SEED = 28731992;
-    private static final Random RANDOM = new Random(SEED);
+    private static Random RANDOM;
     private int WIDTH;
     private int HEIGHT;
     private static int numRoom;
-    private TETile[][] world;
+    TETile[][] world;
 
     Position door;
 
     Player player;
 
-    public MapGenerator(int w, int h) {
+
+    public MapGenerator(int w, int h, int random) {
         WIDTH = w;
         HEIGHT = w;
+        RANDOM = new Random(random);
         numRoom = (int) RandomUtils.gaussian(RANDOM, 25, 5);
 
     }
@@ -50,9 +51,28 @@ public class MapGenerator {
 
         door = addDoor(world);
 
+        player = addPlayer();
 
-        ter.renderFrame(world);
 
+    }
+
+    public Player addPlayer() {
+        int px = 0;
+        int py = 0;
+        boolean add = false;
+        while (!add) {
+            px = RandomUtils.uniform(RANDOM, 0, WIDTH);
+            py = 1;
+            while (world[px][py] != Tileset.FLOOR && py < HEIGHT - 1) {
+                py += 1;
+            }
+            if (world[px][py] == Tileset.FLOOR) {
+                add = true;
+            }
+            world[px][py] = Tileset.PLAYER;
+        }
+
+        return new Player(new Position(px, py));
     }
 
     public Position addDoor(TETile[][] world) {
@@ -66,7 +86,7 @@ public class MapGenerator {
                 dy += 1;
             }
             if (checkNeighbor(world, dx, dy, 2) && world[dx][dy] == Tileset.WALL) {
-                world[dx][dy] = Tileset.UNLOCKED_DOOR;
+                world[dx][dy] = Tileset.LOCKED_DOOR;
                 add = true;
             }
         }
@@ -92,7 +112,7 @@ public class MapGenerator {
         int yTop = Math.min(y + 1, HEIGHT - 1);
         for (int i = xLeft; i <= xRight; i += 1) {
             for (int j = yBottom; j <= yTop; j += 1) {
-                if (world[i][j] == Tileset.FLOOR || world[i][j] == Tileset.SAND) {
+                if (world[i][j] == Tileset.FLOOR) {
                     checked += 1;
                     if (checked == numFloors) {
                         return true;
@@ -125,10 +145,10 @@ public class MapGenerator {
 
     public void connectPositions(Position pa, Position pb) {
         if (pa.x == pb.x) {
-            makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)), 1, Math.abs(pa.y - pb.y) + 1, Tileset.SAND);
+            makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)), 1, Math.abs(pa.y - pb.y) + 1, Tileset.FLOOR);
         }
         else if (pa.y == pb.y) {
-            makeSpace(world, new Position(Math.min(pa.x, pb.x), pa.y), Math.abs(pa.x - pb.x) + 1, 1, Tileset.SAND);
+            makeSpace(world, new Position(Math.min(pa.x, pb.x), pa.y), Math.abs(pa.x - pb.x) + 1, 1, Tileset.FLOOR);
         }
         else {
             Position tmpPos = new Position(pa.x, pb.y);
@@ -173,7 +193,7 @@ public class MapGenerator {
 
 
     public static void main(String[] args) {
-        MapGenerator map = new MapGenerator(50, 50);
+        MapGenerator map = new MapGenerator(50, 50, 50);
         map.buildMap();
 
     }

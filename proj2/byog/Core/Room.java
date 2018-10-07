@@ -14,6 +14,7 @@ public class Room implements Comparable<Room>{
     int y2;
     int width;
     int height;
+
     public Room(int no, Position p, int w, int h) {
         this.no = no;
         roomPos = p;

@@ -8,6 +8,7 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
+    static TETile[][] temp = null;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -32,7 +33,69 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
+
+
         TETile[][] finalWorldFrame = null;
+        input = input.toUpperCase();
+        boolean saving = false;
+        if (input.charAt(0) == 'N') {
+            int i = 1;
+            int random = 0;
+            String seed = parseSeed(input);
+            random = Integer.parseInt(seed);
+            MapGenerator map = new MapGenerator(WIDTH, HEIGHT, random);
+            map.buildMap();
+            saving = parseControl(map, input, seed.length() + 2);
+            if (saving == true) {
+                temp = map.world;
+            }
+            else {
+                MapGenerator newmap = new MapGenerator(WIDTH, HEIGHT, 123);
+                temp = newmap.world;
+            }
+
+            finalWorldFrame = map.world;
+        }
+        else if (input.charAt(0) == 'L') {
+            finalWorldFrame = temp;
+        }
+
         return finalWorldFrame;
     }
+
+
+    public String parseSeed(String input) {
+        String seed = "";
+        for (int i = 1; i < input.length(); i += 1) {
+            if (input.charAt(i) == 'S') {
+                break;
+            }
+            seed += String.valueOf(input.charAt(i));
+        }
+        return seed;
+    }
+
+    public boolean parseControl(MapGenerator map, String input, int start) {
+        boolean saving = false;
+        for (int i = start; i < input.length(); i += 1) {
+            saving = play(map, input.charAt(i));
+        }
+        return saving;
+    }
+
+
+    public boolean play(MapGenerator map, char cmd) {
+        if (cmd != ':' && cmd != 'Q') {
+            map.player.move(map.world, cmd);
+        }
+        else {
+            if (cmd =='Q') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }
