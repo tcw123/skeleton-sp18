@@ -58,13 +58,13 @@ public class Game {
             parseControl(map, input, seed.length() + 2);
 
             finalWorldFrame = map.world;
-            ter.renderFrame(finalWorldFrame);
+            drawFrame(finalWorldFrame);
         }
         else if(input.charAt(0) == 'L') {
             MapGenerator map = loadMap();
             parseControl(map, input, 1);
             finalWorldFrame = map.world;
-            ter.renderFrame(finalWorldFrame);
+            drawFrame(finalWorldFrame);
         }
 
         return finalWorldFrame;
