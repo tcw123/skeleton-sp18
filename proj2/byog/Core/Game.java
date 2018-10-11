@@ -2,6 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import edu.princeton.cs.introcs.StdDraw;
+import java.awt.Color;
+
 
 
 import java.io.File;
@@ -18,7 +21,7 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-
+    public static final int BANNER = 3;
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
@@ -147,6 +150,35 @@ public class Game {
 
         /* In the case no World has been saved yet, we return a new one. */
         return new MapGenerator(123, WIDTH, HEIGHT);
+    }
+
+    void  drawFrame(TETile[][] world) {
+        while (true) {
+            StdDraw.clear(new Color(0, 0, 0));
+            renderCanvas(world);
+            int x = (int) StdDraw.mouseX();
+            int y = (int) StdDraw.mouseY();
+            String description = world[x][y].description();
+            StdDraw.setPenColor(Color.white);
+            StdDraw.textLeft(0, HEIGHT - BANNER / 16 + 1, description);
+            StdDraw.line(0, HEIGHT - BANNER / 16 + 0.5, WIDTH, HEIGHT - BANNER / 16 + 0.5);
+            StdDraw.show();
+        }
+    }
+
+    void renderCanvas(TETile[][] world) {
+        int numXTiles = world.length;
+        int numYTiles = world[0].length;
+
+        for (int x = 0; x < numXTiles; x += 1) {
+            for (int y = 0; y < numYTiles; y += 1) {
+                if (world[x][y] == null) {
+                    throw new IllegalArgumentException("Tile at position x=" + x + ", y=" + y
+                            + " is null.");
+                }
+                world[x][y].draw(x, y);
+            }
+        }
     }
 
 }

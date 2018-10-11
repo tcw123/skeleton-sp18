@@ -1,6 +1,8 @@
+/** 创建出游戏的主题map， map的主体应该分为三部分，
+ * 一个是room， 一个是走廊， 一个是墙。 */
+
 package byog.Core;
 
-import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
@@ -23,19 +25,12 @@ public class MapGenerator implements java.io.Serializable {
     MapGenerator(int w, int h, long random) {
         WIDTH = w;
         HEIGHT = h;
-        RANDOM = new Random(random);
+        RANDOM = new Random(random);//根据Game中给出的seed得到伪随机数RANDOM
         numRoom = (int) RandomUtils.gaussian(RANDOM, 25, 5);
-
     }
 
-//    private void initWorld(TERenderer ter) {
-//        ter.initialize(WIDTH, HEIGHT);
-//    }
-    
+    /** MapGenerator 的主要函数，来完成生成一个map的各项工作。 */
     void buildMap() {
-//        TERenderer ter = new TERenderer();
-//        initWorld(ter);
-
         world = new TETile[WIDTH][HEIGHT];
         for (int i = 0; i < WIDTH; i += 1) {
             for (int j = 0; j < HEIGHT; j += 1) {
@@ -56,6 +51,7 @@ public class MapGenerator implements java.io.Serializable {
 
     }
 
+    /** 在适当的位置随机添加player对象。 */
     Player addPlayer() {
         int px = 0;
         int py = 0;
@@ -75,6 +71,7 @@ public class MapGenerator implements java.io.Serializable {
         return new Player(new Position(px, py));
     }
 
+    /** 在适当的位置添加一个door。 */
     Position addDoor(TETile[][] world) {
         int dx = 0;
         int dy = 0;
@@ -94,6 +91,7 @@ public class MapGenerator implements java.io.Serializable {
     }
 
 
+    /** 为构造好的room和走廊添加墙。 */
     void buildWall(TETile[][] world) {
         for (int i = 0; i < WIDTH; i += 1) {
             for (int j = 0; j < HEIGHT; j += 1) {
@@ -104,6 +102,7 @@ public class MapGenerator implements java.io.Serializable {
         }
     }
 
+    /** 判断所给位置的四周的Floor个数。 */
     boolean checkNeighbor(TETile[][] world, int x, int y, int numFloors) {
         int checked = 0;
         int xLeft = Math.max(x - 1, 0);
@@ -123,6 +122,7 @@ public class MapGenerator implements java.io.Serializable {
         return false;
     }
 
+    /** 将创建的对象添加到map中。 */
     void makeSpace(TETile[][] world, Position p, int w, int h, TETile t) {
         for (int i = 0; i < w; i += 1) {
             for (int j = 0; j < h; j += 1) {
@@ -133,6 +133,7 @@ public class MapGenerator implements java.io.Serializable {
         }
     }
 
+    /** 将创建出得到的room一一连接形成走廊。 */
     void connectRooms(ArrayList<Room> roomlist) {
         for (int i = 0; i < roomlist.size() - 1; i += 1) {
             Room ra = roomlist.get(i);
@@ -144,7 +145,7 @@ public class MapGenerator implements java.io.Serializable {
             connectPositions(pa, pb);
         }
     }
-
+    /** 连接坐标和坐标。 */
     void connectPositions(Position pa, Position pb) {
         if (pa.x == pb.x) {
             makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)),
@@ -161,6 +162,7 @@ public class MapGenerator implements java.io.Serializable {
         }
     }
 
+    /** 在空白的map图中创建出numRoom个room。 */
     ArrayList<Room> makeRoom(TETile[][] world, int numRoom) {
         int countRooms = 0;
         ArrayList<Room> roomlist = new ArrayList<>();
@@ -184,6 +186,8 @@ public class MapGenerator implements java.io.Serializable {
         return roomlist;
     }
 
+    /** 判断创建出的room是否有重叠。
+     * https://stackoverflow.com/questions/306316/determine-if-two-rectangles-overlap-each-other. */
     boolean overlap(ArrayList<Room> roomlist, Room ra) {
 
         for (Room rb : roomlist) {
@@ -194,13 +198,5 @@ public class MapGenerator implements java.io.Serializable {
         return false;
 
     }
-
-
-    public static void main(String[] args) {
-        MapGenerator map = new MapGenerator(50, 50, 50);
-        map.buildMap();
-
-    }
-
 
 }
