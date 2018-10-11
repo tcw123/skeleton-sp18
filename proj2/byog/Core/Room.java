@@ -5,7 +5,7 @@ package byog.Core;
  * the inside space is floor
  */
 
-public class Room implements Comparable<Room>{
+public class Room implements Comparable<Room> {
     Position roomPos;
     int no;
     int x1;

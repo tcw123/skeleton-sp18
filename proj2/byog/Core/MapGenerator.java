@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class MapGenerator {
+public class MapGenerator implements java.io.Serializable {
     private static Random RANDOM;
     private int WIDTH;
     private int HEIGHT;
@@ -19,22 +19,22 @@ public class MapGenerator {
 
     Player player;
 
-
-    public MapGenerator(int w, int h, long random) {
+    /** MapGenerator 的构造函数，设定map的长宽以及RANDOM的值。 */
+    MapGenerator(int w, int h, long random) {
         WIDTH = w;
-        HEIGHT = w;
+        HEIGHT = h;
         RANDOM = new Random(random);
         numRoom = (int) RandomUtils.gaussian(RANDOM, 25, 5);
 
     }
 
-    public void initWorld(TERenderer ter) {
-        ter.initialize(WIDTH, HEIGHT);
-    }
-
-    public void buildMap() {
-        TERenderer ter = new TERenderer();
-        initWorld(ter);
+//    private void initWorld(TERenderer ter) {
+//        ter.initialize(WIDTH, HEIGHT);
+//    }
+    
+    void buildMap() {
+//        TERenderer ter = new TERenderer();
+//        initWorld(ter);
 
         world = new TETile[WIDTH][HEIGHT];
         for (int i = 0; i < WIDTH; i += 1) {
@@ -56,7 +56,7 @@ public class MapGenerator {
 
     }
 
-    public Player addPlayer() {
+    Player addPlayer() {
         int px = 0;
         int py = 0;
         boolean add = false;
@@ -75,7 +75,7 @@ public class MapGenerator {
         return new Player(new Position(px, py));
     }
 
-    public Position addDoor(TETile[][] world) {
+    Position addDoor(TETile[][] world) {
         int dx = 0;
         int dy = 0;
         boolean add = false;
@@ -94,7 +94,7 @@ public class MapGenerator {
     }
 
 
-    public void buildWall(TETile[][] world) {
+    void buildWall(TETile[][] world) {
         for (int i = 0; i < WIDTH; i += 1) {
             for (int j = 0; j < HEIGHT; j += 1) {
                 if (world[i][j] == Tileset.NOTHING && checkNeighbor(world, i, j, 1)) {
@@ -104,7 +104,7 @@ public class MapGenerator {
         }
     }
 
-    public boolean checkNeighbor(TETile[][] world, int x, int y, int numFloors) {
+    boolean checkNeighbor(TETile[][] world, int x, int y, int numFloors) {
         int checked = 0;
         int xLeft = Math.max(x - 1, 0);
         int xRight = Math.min(x + 1, WIDTH - 1);
@@ -123,7 +123,7 @@ public class MapGenerator {
         return false;
     }
 
-    public void makeSpace(TETile[][] world, Position p, int w, int h, TETile t) {
+    void makeSpace(TETile[][] world, Position p, int w, int h, TETile t) {
         for (int i = 0; i < w; i += 1) {
             for (int j = 0; j < h; j += 1) {
                 if (world[i + p.x][j + p.y] == Tileset.NOTHING) {
@@ -133,7 +133,7 @@ public class MapGenerator {
         }
     }
 
-    public void connectRooms(ArrayList<Room> roomlist) {
+    void connectRooms(ArrayList<Room> roomlist) {
         for (int i = 0; i < roomlist.size() - 1; i += 1) {
             Room ra = roomlist.get(i);
             Room rb = roomlist.get(i + 1);
@@ -145,7 +145,7 @@ public class MapGenerator {
         }
     }
 
-    public void connectPositions(Position pa, Position pb) {
+    void connectPositions(Position pa, Position pb) {
         if (pa.x == pb.x) {
             makeSpace(world, new Position(pa.x, Math.min(pa.y, pb.y)),
                     1, Math.abs(pa.y - pb.y) + 1, Tileset.FLOOR);
@@ -161,7 +161,7 @@ public class MapGenerator {
         }
     }
 
-    public ArrayList<Room> makeRoom(TETile[][] world, int numRoom) {
+    ArrayList<Room> makeRoom(TETile[][] world, int numRoom) {
         int countRooms = 0;
         ArrayList<Room> roomlist = new ArrayList<>();
         while (countRooms < numRoom) {
@@ -184,7 +184,7 @@ public class MapGenerator {
         return roomlist;
     }
 
-    public boolean overlap(ArrayList<Room> roomlist, Room ra) {
+    boolean overlap(ArrayList<Room> roomlist, Room ra) {
 
         for (Room rb : roomlist) {
             if (ra.x1 < rb.x2 && ra.x2 > rb.x1 && ra.y1 < rb.y2 + 1 && ra.y2 > rb.y1 + 1) {
@@ -201,4 +201,6 @@ public class MapGenerator {
         map.buildMap();
 
     }
+
+
 }

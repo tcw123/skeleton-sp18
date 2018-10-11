@@ -3,7 +3,7 @@ package byog.Core;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-public class Player {
+public class Player implements java.io.Serializable {
     Position p;
 
     public Player(Position p) {
@@ -36,7 +36,7 @@ public class Player {
 
         if (cmd == 'D') {
             if (p.x < world.length - 1 && !world[p.x + 1][p.y].equals(Tileset.WALL)) {
-                world[p.x][p.y] =Tileset.FLOWER;
+                world[p.x][p.y] = Tileset.FLOWER;
                 p.x += 1;
             }
         }
