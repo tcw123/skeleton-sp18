@@ -3,10 +3,9 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
-import java.awt.Color;
 
 
-
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
@@ -17,15 +16,156 @@ import java.io.IOException;
 
 
 public class Game {
+
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
-    public static final int BANNER = 3;
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = 40;
+
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+
+        ter.initialize(WIDTH, HEIGHT);
+
+        drawGUI();
+
+        handleInput();
+
+    }
+
+
+    public void handleInput() {
+        while (!StdDraw.hasNextKeyTyped()) {
+            continue;
+        }
+
+        char key = Character.toUpperCase(StdDraw.nextKeyTyped());
+
+        if (key == 'N') {
+            String introduction = "Please enter a random seed (end with 'S'): ";
+            drawString(introduction);
+            String seedString = handleSeed(introduction);
+            long seed = Long.parseLong(seedString.substring(0, seedString.length() - 1));
+            MapGenerator map = new MapGenerator(WIDTH, HEIGHT, seed);
+            map.buildMap();
+
+            roundPlay(map);
+
+
+        }
+
+        else if (key == 'L') {
+            MapGenerator map = loadMap();
+
+            roundPlay(map);
+        }
+
+        else if (key == 'Q') {
+            String quitString = "Good Bye!";
+            drawString(quitString);
+        }
+    }
+
+    public void roundPlay(MapGenerator map) {
+        while (true) {
+            ter.renderFrame(map.world);
+            int x = (int) StdDraw.mouseX();
+            int y = (int) StdDraw.mouseY();
+            String description = map.world[x][y].description();
+            StdDraw.setPenColor(Color.white);
+            StdDraw.textLeft(0, 2, description);
+            StdDraw.show();
+
+
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = Character.toUpperCase(StdDraw.nextKeyTyped());
+            boolean quit = play(map, key);
+
+            if (map.door.x == map.player.p.x && map.door.y == map.player.p.y) {
+                StdDraw.clear();
+                StdDraw.clear(Color.black);
+                drawString("Congratulations! You succeeded to get out of the maze！");
+                break;
+            }
+
+            if (quit == true) {
+                StdDraw.pause(500);
+
+                StdDraw.clear(Color.black);
+                drawString("The game has been saved, bye! ");
+                break;
+            }
+            StdDraw.show();
+        }
+
+    }
+
+    public String handleSeed(String introduction) {
+        String input = "";
+        String display = introduction + input;
+        drawString(display);
+
+        while (Character.toUpperCase(display.charAt(display.length() - 1)) != 'S') {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = StdDraw.nextKeyTyped();
+            input += String.valueOf(key);
+            display = introduction + input;
+            drawString(display);
+        }
+        StdDraw.pause(500);
+
+        return input;
+
+    }
+    public void drawString(String s) {
+
+
+        StdDraw.clear();
+        StdDraw.clear(Color.black);
+
+        Font stringFont = new Font("Monaco", Font.BOLD, 20);
+        StdDraw.setFont(stringFont);
+        StdDraw.setPenColor(Color.white);
+
+        StdDraw.text(WIDTH / 2, HEIGHT / 2, s);
+
+        StdDraw.show();
+    }
+
+    public void drawGUI() {
+        int midWidth = WIDTH / 2;
+        int midHeight = HEIGHT / 2;
+
+        StdDraw.clear();
+        StdDraw.clear(Color.black);
+
+        // Draw the GUI
+        Font bigFont = new Font("Monaco", Font.BOLD, 50);
+        StdDraw.setFont(bigFont);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(midWidth, HEIGHT - 5, "GET OUT! ");
+        Font smallFont = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(smallFont);
+        StdDraw.text(midWidth, midHeight, "New Game (N)");
+        StdDraw.text(midWidth, midHeight - 3, "Load Game (L) ");
+        StdDraw.text(midWidth, midHeight - 6, "Quit (Q)");
+
+
+        StdDraw.show();
+
+
+        // Draw the actual text
+//        Font bigFont = new Font("Monaco", Font.BOLD, 30);
+//        StdDraw.setFont(bigFont);
+//        StdDraw.setPenColor(Color.green);
+//        StdDraw.text(midWidth, midHeight, s);
+//        StdDraw.show();
     }
 
     /**
@@ -58,13 +198,13 @@ public class Game {
             parseControl(map, input, seed.length() + 2);
 
             finalWorldFrame = map.world;
-            drawFrame(finalWorldFrame);
+            ter.renderFrame(finalWorldFrame);
         }
         else if(input.charAt(0) == 'L') {
             MapGenerator map = loadMap();
             parseControl(map, input, 1);
             finalWorldFrame = map.world;
-            drawFrame(finalWorldFrame);
+            ter.renderFrame(finalWorldFrame);
         }
 
         return finalWorldFrame;
@@ -84,12 +224,10 @@ public class Game {
 
 
     /** 根据input对于player的指令对player进行操作。 */
-    public boolean parseControl(MapGenerator map, String input, int start) {
-        boolean saving = false;
+    public void parseControl(MapGenerator map, String input, int start) {
         for (int i = start; i < input.length(); i += 1) {
-            saving = play(map, input.charAt(i));
+            play(map, input.charAt(i));
         }
-        return saving;
     }
 
     /** 既对player进行移动，又判断是否是以：q结尾。 */
@@ -105,6 +243,7 @@ public class Game {
         }
         return false;
     }
+
     /** 在遇到：q后保存当前的map文件到map.ser. */
     void quitSaving(MapGenerator map) {
         File f = new File("./map.ser");
@@ -151,34 +290,4 @@ public class Game {
         /* In the case no World has been saved yet, we return a new one. */
         return new MapGenerator(123, WIDTH, HEIGHT);
     }
-
-    void  drawFrame(TETile[][] world) {
-        while (true) {
-            StdDraw.clear(new Color(0, 0, 0));
-            renderCanvas(world);
-            int x = (int) StdDraw.mouseX();
-            int y = (int) StdDraw.mouseY();
-            String description = world[x][y].description();
-            StdDraw.setPenColor(Color.white);
-            StdDraw.textLeft(0, HEIGHT - BANNER / 16 + 1, description);
-            StdDraw.line(0, HEIGHT - BANNER / 16 + 0.5, WIDTH, HEIGHT - BANNER / 16 + 0.5);
-            StdDraw.show();
-        }
-    }
-
-    void renderCanvas(TETile[][] world) {
-        int numXTiles = world.length;
-        int numYTiles = world[0].length;
-
-        for (int x = 0; x < numXTiles; x += 1) {
-            for (int y = 0; y < numYTiles; y += 1) {
-                if (world[x][y] == null) {
-                    throw new IllegalArgumentException("Tile at position x=" + x + ", y=" + y
-                            + " is null.");
-                }
-                world[x][y].draw(x, y);
-            }
-        }
-    }
-
 }
